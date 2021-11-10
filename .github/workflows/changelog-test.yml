@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Create release notes (release_notes.md)
         #run: ./generate_release_notes.sh ${LATEST_TAG} origin/trunk ${GRID_VERSION} ${BUILD_DATE}
-        run: 'git --no-pager log "$(git describe --tags --abbrev=0)...origin/main" --pretty=format:"* [\`%h\`](https://github.com/Loki-Afro/manualaction/commit/%H) - %s :: %an" --reverse >> release_notes.md'
+        run: 'git --no-pager log "$(git describe --tags --abbrev=0)...main" --pretty=format:"* [\`%h\`](https://github.com/Loki-Afro/manualaction/commit/%H) - %s :: %an" --reverse >> release_notes.md'
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
