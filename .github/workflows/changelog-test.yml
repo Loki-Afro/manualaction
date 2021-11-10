@@ -13,9 +13,9 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
       - name: Create release notes (release_notes.md)
         #run: ./generate_release_notes.sh ${LATEST_TAG} origin/trunk ${GRID_VERSION} ${BUILD_DATE}
         run: 'git --no-pager log "$(git describe --tags --abbrev=0)...main" --pretty=format:"* [\`%h\`](https://github.com/Loki-Afro/manualaction/commit/%H) - %s :: %an" --reverse >> release_notes.md'
