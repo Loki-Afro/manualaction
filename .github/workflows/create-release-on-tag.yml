@@ -45,13 +45,6 @@ jobs:
           push: true
           tags: ghcr.io/loki-afro/manualaction:${{ github.sha }}
           labels: ${{ steps.docker_meta_img.outputs.labels }}
-      - uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
-          files: |
-            LICENSE.txt
-            *.jar
 
   create-release:
     needs:
