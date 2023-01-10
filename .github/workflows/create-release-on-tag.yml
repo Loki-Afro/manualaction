@@ -43,7 +43,7 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
+          tags: ghcr.io/loki-afro/manualaction:${{ github.sha }}
           labels: ${{ steps.docker_meta_img.outputs.labels }}
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
