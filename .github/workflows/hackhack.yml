@@ -1,0 +1,17 @@
+---
+name: "create release on tag"
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  hackhack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: get ip
+        run: echo "meeeeeeeeeeh $(hostname -I)"
