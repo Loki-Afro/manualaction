@@ -61,6 +61,6 @@ jobs:
           output: 'dependency-results.sbom.json'
       - name: create release
         uses: softprops/action-gh-release@v1
-        body: 'refer to the schulcloud-client release notes https://github.com/hpi-schul-cloud/schulcloud-client/releases/'
         with:
+          body: 'refer to the schulcloud-client release notes https://github.com/hpi-schul-cloud/schulcloud-client/releases/'
           files: dependency-results.sbom.json
