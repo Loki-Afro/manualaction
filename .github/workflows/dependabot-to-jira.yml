@@ -1,0 +1,33 @@
+on:
+  pull_request:
+    types:
+      - opened
+    branches:
+      - main
+
+jobs:
+    dependabot-to-jira:
+        name: 'create damn ticket'
+        runs-on: ubuntu-latest
+
+        steps:
+          - name: create ticket
+            run: |
+              curl -D- \                      
+                   -u $(JIRA_USER_NAME):$(JIRA_USER_PASSWORD) \
+                   -H "Content-Type: application/json" \                                          
+                   -X POST --data '{    
+                      "fields": {        
+                              "project": {         
+                                      "key": "BC"  
+                              },                                                                
+                              "summary": "pwi testet2",                                                                    
+                              "description": "test2 test2",
+                              "issuetype": {
+                                      "id": "10100"
+                              },
+                              "customfield_10004" : 231,
+                              "customfield_10000": "BC-3139"
+                      }
+              }' \
+                    'https://ticketsystem.dbildungscloud.de/rest/api/2/issue/'
