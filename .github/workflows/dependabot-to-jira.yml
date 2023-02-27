@@ -20,8 +20,10 @@ jobs:
                        "project": {
                          "key": "BC"
                        },
-                       "summary": "pwi testet2",
-                       "description": "test2 test2",
+                       "summary": "${{ github.event.pull_request.title }}",
+                       "description": "h4. Task:
+                                       ${{ github.event.pull_request.title }}
+                                       ${{ github.event.pull_request.html_url }}",
                        "issuetype": {
                          "id": "10100"
                        },
