@@ -6,9 +6,9 @@ on:
 
 jobs:
     dependabot-to-jira:
+        if: ${{ github.actor == 'dependabot[bot]' }}
         name: 'create damn ticket'
         runs-on: ubuntu-latest
-
         steps:
           - name: create ticket
             run: |
