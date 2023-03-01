@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "class-validator": "^0.13.2",
+    "class-validator": "^0.14.0",
     "json5": "^1.0.1"
   }
 }
