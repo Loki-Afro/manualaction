@@ -1,9 +1,11 @@
 ---
-name: "create release on tag"
+name: "hackhack"
 
 on:
   pull_request:
     branches: [ main ]
+  branches:
+    - main
 
 jobs:
   hackhack:
