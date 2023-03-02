@@ -3,12 +3,13 @@ name: "hackhack"
 
 on:
   pull_request:
-    types: [opened, reopened]
+    types: [opened, reopened, labeled]
   push:
     branches: [ main ]
 
 jobs:
   hackhack:
+    if: ${{ github.actor != 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
