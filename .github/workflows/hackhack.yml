@@ -2,10 +2,11 @@
 name: "hackhack"
 
 on:
-  pull_request:
-    types: [opened, reopened, labeled]
   push:
-    branches: [ main ]
+    branches-ignore:
+      - dependabot/**
+  pull_request:
+    types: [labeled]
 
 jobs:
   hackhack:
