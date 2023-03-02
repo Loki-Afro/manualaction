@@ -15,4 +15,10 @@ jobs:
         with:
           fetch-depth: 0
       - name: do something
-        run: echo "meeeeeeeeeeh $(hostname -I)"
+        run: | 
+          echo "meeeeeeeeeeh $(hostname -I)"
+          if [ "${{ secrets.TEST_SECRET }}" != '' ]; then
+            echo "secret available"
+          else 
+            echo "secret unavailable"
+          fi
