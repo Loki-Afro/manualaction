@@ -9,7 +9,7 @@ on:
     types: [labeled]
 
 jobs:
-  hackhack:
+  hackhack-job:
     #https://github.com/actions/runner/issues/1173#issuecomment-1354501147
     if: |
       (github.actor == 'dependabot[bot]' &&
