@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "class-validator": "^0.13.2",
-    "cookiejar": "^2.1.2",
+    "cookiejar": "^2.1.4",
     "json5": "^1.0.1"
   }
 }
