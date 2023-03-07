@@ -12,8 +12,9 @@ jobs:
   hackhack:
     #https://github.com/actions/runner/issues/1173#issuecomment-1354501147
     if: |
-      github.actor != 'dependabot[bot]' && 
-      contains(github.event.issue.labels.*.name, 'ready-for-ci') == 'true'
+      (github.actor == 'dependabot[bot]' &&
+      contains(github.event.issue.labels.*.name, 'ready-for-ci') == 'true') ||
+      github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
