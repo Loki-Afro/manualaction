@@ -22,6 +22,9 @@ jobs:
           fetch-depth: 0
       - name: do something
         run: | 
+          echo "base" ${{ github.event.pull_request.base.ref }}
+          echo "head" ${{ github.event.pull_request.head.ref }}
+          
           echo "meeeeeeeeeeh $(hostname -I)"
           if [ "${{ secrets.TEST_SECRET }}" != '' ]; then
             echo "secret available"
