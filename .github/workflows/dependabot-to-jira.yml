@@ -46,12 +46,6 @@ jobs:
               echo "created_issue=$created_issue" >> $GITHUB_OUTPUT
 
           - name: update-pull-request
-            uses: kt3k/update-pr-description@v2
-            with:
-              pr_title: ${{ steps.create_ticket.outputs.created_issue }} - ${{ github.event.pull_request.title }}
-              github_token: ${{ secrets.GITHUB_TOKEN }}
-
-          - name: update-pull-request
             uses: k3rnels-actions/pr-update@v1
             id: pr_update
             with:
