@@ -48,6 +48,9 @@ jobs:
               echo "created issue: $created_issue";
               echo "created_issue=$created_issue" >> $GITHUB_OUTPUT
 
+          # one needs a local git repo for k3rnels-actions/pr-update otherwise it will complain about not finding the branches ...
+          - name: checkout
+            uses: actions/checkout@v3
           - name: update-pull-request
             uses: k3rnels-actions/pr-update@v1
             id: pr_update
