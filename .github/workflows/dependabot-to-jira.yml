@@ -44,7 +44,7 @@ jobs:
                   exit 1;
               fi
 
-              created_issue=$(jq '.key' response.txt);
+              created_issue=$(jq -r '.key' response.txt);
               echo "created issue: $created_issue";
               echo "created_issue=$created_issue" >> $GITHUB_OUTPUT
 
