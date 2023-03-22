@@ -9,6 +9,9 @@ jobs:
         if: ${{ github.actor == 'dependabot[bot]' }}
         name: 'dependabot-pr-to-jira'
         runs-on: ubuntu-latest
+        permissions:
+          contents: read
+          pull-requests: write
         steps:
           - name: create ticket
             id: create_ticket
