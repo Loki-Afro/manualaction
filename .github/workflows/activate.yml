@@ -28,7 +28,8 @@ jobs:
           fi
           echo "branchname: $branchname"
           
-          hasLabel=$(gh pr view $branchname --repo ${{ github.repository }} --json labels --jq '.labels[] | select(.name == "auto-activate-ns") | length > 0')
+          # gh pr view will exit with 1 when there is no pr for a given branch
+          hasLabel=$(gh pr view $branchname --repo ${{ github.repository }} --json labels --jq '.labels[] | select(.name == "auto-activate-ns") | length > 0' 2>/dev/null && echo "true" || echo "false")
           
           if [ "$hasLabel" == "true" ]; then
               echo "has pr, has label, extend activation time"
