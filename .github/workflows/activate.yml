@@ -21,18 +21,20 @@ jobs:
         run: | 
           if [ "${{ github.event_name }}" == 'pull_request' ]; then
             echo "inside a pr"
-            branchname=${{ github.event.pull_request.head.ref }}
+            branch_name=${{ github.event.pull_request.head.ref }}
           elif [[ $GITHUB_EVENT_NAME == 'push' ]]; then
             echo "inside a branch"
-            branchname=${GITHUB_REF#refs/heads/}
+            branch_name=${GITHUB_REF#refs/heads/}
           fi
-          echo "branchname: $branchname"
+          echo "branch_name: $branch_name"
           
           # gh pr view will exit with 1 when there is no pr for a given branch
-          hasLabel=$(gh pr view $branchname --repo ${{ github.repository }} --json labels --jq '.labels[] | select(.name == "auto-activate-ns") | length > 0' 2>/dev/null && echo "true" || echo "false")
+          pr_labels=$(gh pr view $branch_name --repo ${{ github.repository }} --json labels 2>/dev/null) && echo "$pr_labels" || echo "no pr found"
+          echo "pr_labels: $pr_labels"
+          pr_has_label=$(jq $pr_labels '.labels[] | select(.name == "auto-activate-ns") | length > 0')
           
-          if [ "$hasLabel" == "true" ]; then
+          if [ "$has_activation_label" == "true" ]; then
               echo "has pr, has label, extend activation time"
           else
-              echo "may have an pr, but if, there is no label, create ns if there isn't one already"
+              echo "may have an pr, but if, there is no label, will create initial ns entry if there isn't one already"
           fi
