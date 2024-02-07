@@ -1,0 +1,35 @@
+---
+name: "activate namespace"
+
+on:
+  push:
+    branches-ignore:
+      - dependabot/**
+  pull_request:
+    branches:
+      - main
+    types: [labeled]
+
+
+jobs:
+  activate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: activate namespace
+        run: | 
+          if [ "${{ github.event_name }}" == 'pull_request' ]; then
+            echo "inside a pr"
+            branchname=${{ github.event.pull_request.head.ref }}
+          elif [[ $GITHUB_EVENT_NAME == 'push' ]]; then
+            echo "inside a branch"
+            branchname=${GITHUB_REF#refs/heads/}
+          fi
+          echo "branchname: $branchname"
+          
+          hasLabel=$(gh pr view $branchname --json labels --jq '.labels[] | select(.name == "auto-activate-ns") | length > 0')
+          
+          if [ "$hasLabel" == "true" ]; then
+              echo "has pr, has label, extend activation time"
+          else
+              echo "may have an pr, but if, there is no label, create ns if there isn't one already"
+          fi
