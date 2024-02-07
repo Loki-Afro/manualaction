@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: activate namespace
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: | 
           if [ "${{ github.event_name }}" == 'pull_request' ]; then
             echo "inside a pr"
