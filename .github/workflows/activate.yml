@@ -31,7 +31,7 @@ jobs:
           # gh pr view will exit with 1 when there is no pr for a given branch
           pr_labels=$(gh pr view $branch_name --repo ${{ github.repository }} --json labels 2>/dev/null) && echo "$pr_labels" || echo "no pr found"
           echo "pr_labels: $pr_labels"
-          pr_has_label=$(echo $pr_labels | jq '.labels[] | select(.name == "auto-activate-ns") | length > 0')
+          has_activation_label=$(echo $pr_labels | jq '.labels[] | select(.name == "auto-activate-ns") | length > 0')
           
           if [ "$has_activation_label" == "true" ]; then
               echo "has pr, has label, extend activation time"
