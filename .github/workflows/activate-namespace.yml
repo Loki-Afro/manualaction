@@ -12,12 +12,17 @@ on:
 
 
 jobs:
-  activate:
+  gather-facts:
     runs-on: ubuntu-latest
+    outputs:
+      ns-activator-function: ${{ steps.gather-facts.outputs.function }}
+      branch-name: ${{ steps.gather-facts.outputs.branch_name }}
     steps:
-      - name: activate namespace
+      - name: gather-facts
+        id: gather-facts
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_EVENT: ${{ github.event_name }}
         run: | 
           if [ "${{ github.event_name }}" == 'pull_request' ]; then
             echo "inside a pr"
@@ -36,7 +41,33 @@ jobs:
           if [ "$has_activation_label" == "true" ]; then
               echo "has pr, has label, extend activation time"
               # curl -XPOST -H 'Content-Type: application/json' "https://activate.brb.dbildungscloud.dev/namespace/extendAndWait?namespace=$branch_name"
+              echo "function=extendAndWait" >> "$GITHUB_OUTPUT"
           else
               echo "may have an pr, but if, there is no label, will create initial ns entry if there isn't one already"
               # curl -XPUT -H 'Content-Type: application/json' "https://activate.brb.dbildungscloud.dev/namespace/createIfNotExistsAndWait?namespace=$branch_name"
+              echo "function=createIfNotExistsAndWait" >> "$GITHUB_OUTPUT"
           fi
+          echo "branch_name=$branch_name" >> "$GITHUB_OUTPUT" 
+
+  create-branch-identifier:
+    needs: gather-facts
+    uses: hpi-schul-cloud/dof_app_deploy/.github/workflows/branch-to-namespace.yml@main
+    with:
+      branch: ${{ needs.gather-facts.outputs.branch-name }}
+
+  call-ns-activator:
+    needs: [gather-facts, create-branch-identifier]
+    strategy:
+      fail-fast: false
+      matrix:
+        instance: ["dbc", "brb", "nbc", "thr"]
+    runs-on: ubuntu-latest
+    steps:
+      - name: call ns activator
+        env:
+          NS_ACTIVATOR_FUNCTION: ${{ needs.gather-facts.outputs.ns-activator-function }}
+          NAMESPACE_NAME: ${{ needs.create-branch-identifier.outputs.id_branch }}
+        run: |
+          echo "huhu"
+          curl -XPUT -H 'Content-Type: application/json' "https://activate.${{ matrix.instance }}.dbildungscloud.dev/namespace/$NS_ACTIVATOR_FUNCTION?namespace=$NAMESPACE_NAME"
+
