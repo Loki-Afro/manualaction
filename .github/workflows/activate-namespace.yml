@@ -40,11 +40,9 @@ jobs:
           
           if [ "$has_activation_label" == "true" ]; then
               echo "has pr, has label, extend activation time"
-              # curl -XPOST -H 'Content-Type: application/json' "https://activate.brb.dbildungscloud.dev/namespace/extendAndWait?namespace=$branch_name"
               echo "function=extendAndWait" >> "$GITHUB_OUTPUT"
           else
               echo "may have an pr, but if, there is no label, will create initial ns entry if there isn't one already"
-              # curl -XPUT -H 'Content-Type: application/json' "https://activate.brb.dbildungscloud.dev/namespace/createIfNotExistsAndWait?namespace=$branch_name"
               echo "function=createIfNotExistsAndWait" >> "$GITHUB_OUTPUT"
           fi
           echo "branch_name=$branch_name" >> "$GITHUB_OUTPUT" 
@@ -68,6 +66,5 @@ jobs:
           NS_ACTIVATOR_FUNCTION: ${{ needs.gather-facts.outputs.ns-activator-function }}
           NAMESPACE_NAME: ${{ needs.create-branch-identifier.outputs.id_branch }}
         run: |
-          echo "huhu"
-          curl -XPUT -H 'Content-Type: application/json' "https://activate.${{ matrix.instance }}.dbildungscloud.dev/namespace/$NS_ACTIVATOR_FUNCTION?namespace=$NAMESPACE_NAME"
+          curl -v -XPOST -H 'Content-Type: application/json' "https://activate.${{ matrix.instance }}.dbildungscloud.dev/namespace/$NS_ACTIVATOR_FUNCTION" -d "{\"name\" : \"$NAMESPACE_NAME\"}"
 
