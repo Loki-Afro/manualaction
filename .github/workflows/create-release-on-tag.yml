@@ -41,3 +41,14 @@ jobs:
           push: true
           tags: ghcr.io/loki-afro/manualaction:${{ github.ref_name }}
           labels: ${{ steps.docker_meta_img.outputs.labels }}
+
+  test_only_in_branch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: pwi_Test
+        shell: bash
+        run: |
+          echo "hello world"
