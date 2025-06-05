@@ -8,4 +8,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run curl with rate limit
-        run: curl -v --no-buffer --limit-rate 350k https://null.social/bigfile.dat -o /dev/null
+        run: curl -v --no-buffer --limit-rate 350k https://bc-8828.dbc.dbildungscloud.dev/bigfile -o /dev/null
