@@ -1,0 +1,11 @@
+name: test curl
+
+on:
+  push:
+
+jobs:
+  curl-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run curl with rate limit
+        run: curl -v --no-buffer --limit-rate 350k https://bc-8828.dbc.dbildungscloud.dev/bigfile -o /dev/null
